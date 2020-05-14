@@ -1,27 +1,8 @@
-version: 2
+version: 2.1
 jobs:
-  hello/hello-build:
-    docker:
-    - image: circleci/buildpack-deps:curl-browsers
+  build:
+    docker: 
+      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
     steps:
-    - run:
-        command: echo "Hello ${CIRCLE_USERNAME}"
-    - run:
-        command: |-
-          echo "TRIGGERER: ${CIRCLE_USERNAME}"
-          echo "BUILD_NUMBER: ${CIRCLE_BUILD_NUM}"
-          echo "BUILD_URL: ${CIRCLE_BUILD_URL}"
-          echo "BRANCH: ${CIRCLE_BRANCH}"
-          echo "RUNNING JOB: ${CIRCLE_JOB}"
-          echo "JOB PARALLELISM: ${CIRCLE_NODE_TOTAL}"
-          echo "CIRCLE_REPOSITORY_URL: ${CIRCLE_REPOSITORY_URL}"
-        name: Show some of the CircleCI runtime env vars
-    - run:
-        command: |-
-          echo "uname:" $(uname -a)
-          echo "arch: " $(arch)
-        name: Show system information
-workflows:
-  Hello Workflow:
-    jobs:
-    - hello/hello-build
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
